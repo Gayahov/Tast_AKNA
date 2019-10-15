@@ -1,7 +1,8 @@
-.close{    
+.close{ 
+
     color: grey;
     font-weight: 700;
-    position: absolute;
+    position: fixed;
     top: 3px;
     right: 10px;
     cursor: pointer;

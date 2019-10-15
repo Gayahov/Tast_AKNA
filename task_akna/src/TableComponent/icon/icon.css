@@ -1,5 +1,11 @@
 i {
     
-    padding: 5px;
+ padding: 5px;
+ transition: .3s;
 
+}
+i:hover {
+    /* background-color: rgb(33, 53, 90); */
+    padding: 2px;
+    color: rgb(88, 93, 124);
 }

@@ -6,19 +6,65 @@ import Icon from './icon/icon';
 class Table extends Component {
     state = {
         data:[],
-        GuID:"",
         display:"none",
-        display2:"none"
+        display2:"none",
+        post:[],
+        comment:[],
+        title: []
     }
-
+//showComments
     showComments = (e) =>{
-      this.setState({display: "block"})
-    }
-    showPosts = (e) =>{
-      this.setState({display2: "block"})
+      fetch(`https://jsonplaceholder.typicode.com/comments?postId=${e.target.id}`,{
+        method: 'GET',
+        headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+      })
+        .then((resp)=>{return resp.json()})
+        .then((result)=>{  
+          var comment_data=[]  
+          var comments = {} 
+            result.map((v,i) =>{
+              comments.comment = v.body;
+              comment_data.push(comments)
+              //console.log(comment_data)
+                this.setState({
+                  comment:comment_data
+            })
+          })
+        })
+      
+      .then(()=>this.setState({display: "block"}));
     }
 
-    //  callback = () => this.props.callback;
+
+ // showPosts   
+    showPosts = (e) =>{
+      fetch(`https://jsonplaceholder.typicode.com/posts?userId=${e.target.id}`,{
+        method: 'GET',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+          .then((resp)=>{return resp.json()})
+          .then((result)=>{
+            var post_data=[]
+            var posts = {};
+            result.map((v,i)=>{
+              posts.title=v.title;
+              posts.post=v.body;
+              post_data.push(posts);
+                this.setState({
+                  post:post_data,    
+            })
+          })    
+      })
+  // .then(console.log(this.state))
+  .then(()=>this.setState({display2: "block"}));
+  
+    }
+
+  
 
     close = () => {
         this.setState({display:"none", display2:"none"})
@@ -43,34 +89,47 @@ class Table extends Component {
                         <div className="header_btn"><p>Posts</p></div>
                         <div className="header_btn"><p>Comments</p></div>
                     </div>
-
-          {this.state.data.map((v,i) =>
-            
-            <div className="tbl_content" key={i} val={v.GuID}>
-              <div className="td_style" > <i className="fa fa-id-card" aria-hidden="true"></i>{v.name}</div>
-              <div className="td_style" >{v.email}</div>
-              <div className="td_style" >{v.address.city}{","}{v.address.street}</div> 
-              <div className="btn_box">
-              <div onClick = {this.showPosts} className="post_box" id = {v.GuID}><Icon className="fa fa-clipboard" aria-hidden="true"></Icon></div>
-              <div onClick = {this.showComments} className="comment_box" id = {v.GuID}><Icon className="fa fa-comments" aria-hidden="true"></Icon></div> 
-              </div>
-            </div>
+                    {this.state.data.map((v,i) =>
+                      <div className="tbl_content" key={i}>
+                        <div className="td_style" > <Icon className="fa fa-picture-o" aria-hidden="true"></Icon>{v.name}</div>
+                        <div className="td_style" >{v.email}</div>
+                        <div className="td_style" >{v.address.city}{","}{v.address.street}</div> 
+                        <div className="btn_box">
+                        <div onClick = {this.showPosts} className="post_box" ><Icon className="fa fa-clipboard" aria-hidden="true" id={i}></Icon></div>
+                        <div onClick = {this.showComments} className="comment_box" ><Icon className="fa fa-comments" aria-hidden="true" id={i}></Icon></div> 
+                        </div>
+                      </div>
         
           )
         }   
           {/* comment popup */}
           <div  className="popup" style = {{display:this.state.display}}>
-            <div className="form" >
+            <div className="popup_content" >
               <Close callback = {this.close} />
                 <p>User's  Comments</p>
+                <div className="content">
+                {this.state.comment.map((v,i) =>
+                  <div key={i}>
+                    <p>{v.comment}</p> 
+                  </div>
+                )}
+                </div>
             </div>
           </div>
 
           {/* posts popup */}
           <div  className="popup" style = {{display:this.state.display2}}>
-            <div className="form" >
+            <div className="popup_content" >
               <Close callback = {this.close} />
-                <p>User's  posts</p>
+                <p>User's  posts</p> 
+               <div className="content">
+                {this.state.post.map((v,i) =>
+                  <div key={i} >
+                    <h3>{v.title}</h3>
+                    <p>{v.post}</p> 
+                  </div>
+                )}
+                </div>
             </div>
           </div>
        </div>
