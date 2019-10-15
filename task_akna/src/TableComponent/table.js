@@ -1,34 +1,26 @@
 import React, { Component, Fragment } from 'react';
-// import Comments from './comments/comments';
-
 import Close from './close/close'
-
 import './table.css';
+import Icon from './icon/icon';
 
 class Table extends Component {
     state = {
         data:[],
         GuID:"",
-        status1:"none",
         display:"none",
         display2:"none"
     }
 
     showComments = (e) =>{
-      
       this.setState({display: "block"})
-  console.log(454)
-     
     }
     showPosts = (e) =>{
-      
       this.setState({display2: "block"})
-  console.log(454)
-     
     }
-     callback = () => this.props.callback;
+
+    //  callback = () => this.props.callback;
+
     close = () => {
-        
         this.setState({display:"none", display2:"none"})
       }
 
@@ -42,7 +34,7 @@ class Table extends Component {
       }
     render(){
         return(
-            <Fragment>
+          <Fragment>
                 <div className="table_box">
                     <div className="table_header" >
                         <div className="header_name"><p>Name</p></div>
@@ -52,18 +44,16 @@ class Table extends Component {
                         <div className="header_btn"><p>Comments</p></div>
                     </div>
 
-                    {this.state.data.map((v,i) =>
+          {this.state.data.map((v,i) =>
             
             <div className="tbl_content" key={i} val={v.GuID}>
               <div className="td_style" > <i className="fa fa-id-card" aria-hidden="true"></i>{v.name}</div>
               <div className="td_style" >{v.email}</div>
               <div className="td_style" >{v.address.city}{","}{v.address.street}</div> 
               <div className="btn_box">
-              <div onClick = {this.showPosts} className="post_box" id = {v.GuID}><i className="fa fa-clipboard" aria-hidden="true"></i></div>
-              <div onClick = {this.showComments} className="comment_box" id = {v.GuID}><i className="fa fa-comments" aria-hidden="true"></i></div> 
+              <div onClick = {this.showPosts} className="post_box" id = {v.GuID}><Icon className="fa fa-clipboard" aria-hidden="true"></Icon></div>
+              <div onClick = {this.showComments} className="comment_box" id = {v.GuID}><Icon className="fa fa-comments" aria-hidden="true"></Icon></div> 
               </div>
-              
-              
             </div>
         
           )
@@ -83,7 +73,6 @@ class Table extends Component {
                 <p>User's  posts</p>
             </div>
           </div>
-
        </div>
 
      </Fragment>
