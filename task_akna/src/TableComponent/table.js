@@ -59,7 +59,7 @@ class Table extends Component {
             })
           })    
       })
-  // .then(console.log(this.state))
+  
   .then(()=>this.setState({display2: "block"}));
   
     }
@@ -95,8 +95,8 @@ class Table extends Component {
                         <div className="td_style" >{v.email}</div>
                         <div className="td_style" >{v.address.city}{","}{v.address.street}</div> 
                         <div className="btn_box">
-                        <div onClick = {this.showPosts} className="post_box" ><Icon className="fa fa-clipboard" aria-hidden="true" id={i}></Icon></div>
-                        <div onClick = {this.showComments} className="comment_box" ><Icon className="fa fa-comments" aria-hidden="true" id={i}></Icon></div> 
+                        <div onClick = {this.showPosts} className="post_box" ><Icon className="fa fa-clipboard" aria-hidden="true" id={i+1}></Icon></div>
+                        <div onClick = {this.showComments} className="comment_box" ><Icon className="fa fa-comments" aria-hidden="true" id={i+1}></Icon></div> 
                         </div>
                       </div>
         
@@ -106,7 +106,7 @@ class Table extends Component {
           <div  className="popup" style = {{display:this.state.display}}>
             <div className="popup_content" >
               <Close callback = {this.close} />
-                <p>User's  Comments</p>
+                <h3>User's  Comments</h3>
                 <div className="content">
                 {this.state.comment.map((v,i) =>
                   <div key={i}>
@@ -121,7 +121,7 @@ class Table extends Component {
           <div  className="popup" style = {{display:this.state.display2}}>
             <div className="popup_content" >
               <Close callback = {this.close} />
-                <p>User's  posts</p> 
+                <h3>User's  posts</h3> 
                <div className="content">
                 {this.state.post.map((v,i) =>
                   <div key={i} >
@@ -135,7 +135,7 @@ class Table extends Component {
        </div>
 
      </Fragment>
-        )
-    }
+    )
+  }
 }
 export default Table;
